@@ -1,0 +1,41 @@
+
+const facts = [
+    "🐾 Rote Pandas benutzen ihren buschigen Schwanz wie eine Decke, wenn es kalt ist.",
+    "🌳 Sie sind ausgezeichnete Kletterer und können sich mit ihren Krallen gut an Bäumen festhalten.",
+    "🎋 Bambus macht einen grossen Teil ihrer Nahrung aus.",
+    "👀 Ihre Gesichtsmuster helfen dabei, sie von anderen Tieren zu unterscheiden.",
+    "❄️ Ihr dichtes Fell hilft ihnen, in kühlen Bergwäldern warm zu bleiben.",
+    "🐈 Trotz ihres katzenähnlichen Aussehens sind Rote Pandas keine Katzen.",
+    "🌙 Sie sind häufig in der Dämmerung oder nachts aktiv.",
+    "🦶 Ihre Fusssohlen sind behaart. Das hilft ihnen in ihrem kühlen Lebensraum.",
+    "🌏 Rote Pandas leben in Teilen des Himalaya und anderen Bergregionen Asiens.",
+    "❤️ Rote Pandas sind gefährdet. Der Schutz ihrer Wälder ist deshalb sehr wichtig."
+];
+
+const factText = document.getElementById("fact-text");
+const factButton = document.getElementById("fact-button");
+
+let lastFact = -1;
+
+factButton.addEventListener("click", function () {
+    let randomIndex;
+
+    do {
+        randomIndex = Math.floor(Math.random() * facts.length);
+    } while (facts.length > 1 && randomIndex === lastFact);
+
+    lastFact = randomIndex;
+
+    factText.textContent = facts[randomIndex];
+
+    factText.animate(
+        [
+            { opacity: 0, transform: "translateY(10px)" },
+            { opacity: 1, transform: "translateY(0)" }
+        ],
+        {
+            duration: 400,
+            easing: "ease-out"
+        }
+    );
+});

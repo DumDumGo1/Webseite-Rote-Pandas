@@ -1,162 +1,226 @@
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Red Panda Jungle 🐾</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Unreal Factory 🍬</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-    <div class="floating-leaves" aria-hidden="true">
-        🍃　🌿　🍂　🍃　🌱　🍃
-    </div>
+  <header class="topbar">
+    <a class="logo" href="#home">🍭 UNREAL<span>FACTORY</span></a>
+    <nav>
+      <a href="#lab">Süssigkeiten-Labor</a>
+      <a href="#orders">Aufträge</a>
+      <a href="#games">Minispiele</a>
+      <a href="#recipes">Rezeptbuch</a>
+    </nav>
+    <div class="counter">🍬 <span id="candyCount">0</span></div>
+  </header>
 
-    <header class="hero" id="home">
-        <nav class="navbar">
-            <a href="#home" class="logo">🐾 RP JUNGLE</a>
-            <div class="nav-links">
-                <a href="#steckbrief">Steckbrief</a>
-                <a href="#leben">Lebensraum</a>
-                <a href="#funfacts">Fun Facts</a>
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-copy">
+        <div class="eyebrow">DIE VERRÜCKTESTE FABRIK DER WELT</div>
+        <h1>MAKE IT<br><span>UNREAL.</span></h1>
+        <p>Hier gelten keine normalen Süssigkeiten-Regeln. Erfinde verrückte Sorten, mische geheime Zutaten und werde zur legendärsten Süssigkeiten-Erfinderin!</p>
+        <a class="main-button" href="#lab">FABRIK BETRETEN <span>→</span></a>
+        <div class="hero-stats">
+          <div><strong id="heroMade">0</strong><small>ERFUNDEN</small></div>
+          <div><strong id="heroRecipes">0</strong><small>REZEPTE</small></div>
+          <div><strong>∞</strong><small>MÖGLICHKEITEN</small></div>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="hero-candy">🍬</div>
+        <div class="floaty float-a">🍭</div>
+        <div class="floaty float-b">🍓</div>
+        <div class="floaty float-c">✨</div>
+        <div class="floaty float-d">🍋</div>
+        <div class="hero-sticker">100%<br>UNREAL!</div>
+      </div>
+      <div class="hero-bottom">SCROLLEN, EXPERIMENTIEREN, NASCHEN (NUR VIRTUELL!) ↓</div>
+    </section>
+
+    <section class="section lab-section" id="lab">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">01 / DAS EXPERIMENTIER-LABOR</div>
+          <h2>ERFINDE DEIN<br><span>EIGENES CANDY.</span></h2>
+        </div>
+        <p>Du bist die Chefin des Labors. Kombiniere Zutaten und erschaffe etwas, das es noch nie gegeben hat.</p>
+      </div>
+
+      <div class="lab-layout">
+        <div class="machine">
+          <div class="machine-top">
+            <span>✳ CANDY CREATOR 3000</span>
+            <span class="live-dot">● ONLINE</span>
+          </div>
+          <div class="machine-window">
+            <div class="machine-light"></div>
+            <div class="machine-candy" id="machineCandy">🍬</div>
+            <div class="machine-caption" id="machineCaption">BEREIT FÜR DEINE IDEE</div>
+          </div>
+          <div class="machine-controls">
+            <div class="control-row">
+              <label for="flavour">GESCHMACK</label>
+              <select id="flavour">
+                <option value="Erdbeer">🍓 Erdbeer</option>
+                <option value="Zitrone">🍋 Zitrone</option>
+                <option value="Waldbeere">🫐 Waldbeere</option>
+                <option value="Melone">🍉 Melone</option>
+                <option value="Sternenstaub">🌟 Sternenstaub</option>
+                <option value="Cola-Wolke">🥤 Cola-Wolke</option>
+              </select>
             </div>
-        </nav>
-
-        <div class="hero-content">
-            <p class="eyebrow">WILD • FLUFFY • MYSTERIOUS</p>
-            <h1>RED PANDA<br><span>JUNGLE</span></h1>
-            <p class="hero-text">
-                Klein, flauschig und voller Überraschungen.
-                Entdecke die geheime Welt der Roten Pandas!
-            </p>
-            <a class="main-button" href="#steckbrief">
-                Dschungel entdecken ↓
-            </a>
-            <div class="hero-tag">🌿 Bewohner der Bergwälder Asiens</div>
+            <div class="control-row">
+              <label for="shape">FORM</label>
+              <select id="shape">
+                <option value="Stern">⭐ Stern</option>
+                <option value="Herz">💖 Herz</option>
+                <option value="Kugel">🔮 Kugel</option>
+                <option value="Regenbogen">🌈 Regenbogen</option>
+                <option value="Alien">👽 Alien</option>
+                <option value="Dino">🦖 Dino</option>
+              </select>
+            </div>
+            <div class="control-row">
+              <label for="topping">EXTRA</label>
+              <select id="topping">
+                <option value="Glitzer">✨ Glitzer</option>
+                <option value="Sternchen">⭐ Sternchen</option>
+                <option value="Knister-Konfetti">🎉 Knister-Konfetti</option>
+                <option value="Zauberstaub">🪄 Zauberstaub</option>
+                <option value="Mini-Marshmallows">☁️ Mini-Marshmallows</option>
+              </select>
+            </div>
+            <button class="create-button" id="createCandy">✨ SÜSSIGKEIT ERFINDEN</button>
+          </div>
         </div>
 
-        <div class="panda-art" aria-label="Roter Panda">
-            🐼
-            <span class="sparkle sparkle-one">✦</span>
-            <span class="sparkle sparkle-two">✧</span>
-        </div>
-
-        <div class="hero-bottom">SCROLL TO EXPLORE ↓</div>
-    </header>
-
-    <main>
-        <section class="intro section">
-            <p class="section-label">01 / MEET THE PANDA</p>
-            <h2>Ein kleiner <span>Waldgeist.</span></h2>
-            <p>
-                Der Rote Panda ist kein gewöhnlicher Panda!
-                Mit seinem rostrot leuchtenden Fell, dem buschigen
-                Ringelschwanz und seinem Klettertalent ist er ein
-                echter Spezialist der Baumwipfel.
-            </p>
-        </section>
-
-        <section class="section facts-section" id="steckbrief">
-            <p class="section-label">02 / PANDA FILE</p>
-            <h2>Das <span>Panda-Profil</span></h2>
-
-            <div class="facts-grid">
-                <article class="fact-card">
-                    <div class="fact-icon">🔬</div>
-                    <h3>Wissenschaftlicher Name</h3>
-                    <p><i>Ailurus fulgens</i></p>
-                </article>
-
-                <article class="fact-card">
-                    <div class="fact-icon">🏔️</div>
-                    <h3>Lebensraum</h3>
-                    <p>Gemässigte Bergwälder im Himalaya und angrenzenden Regionen Asiens</p>
-                </article>
-
-                <article class="fact-card">
-                    <div class="fact-icon">📏</div>
-                    <h3>Körperlänge</h3>
-                    <p>Etwa 50–65 cm, ohne Schwanz</p>
-                </article>
-
-                <article class="fact-card">
-                    <div class="fact-icon">⚖️</div>
-                    <h3>Gewicht</h3>
-                    <p>Meist etwa 3–6 kg</p>
-                </article>
-
-                <article class="fact-card">
-                    <div class="fact-icon">🎋</div>
-                    <h3>Lieblingsessen</h3>
-                    <p>Vor allem Bambus, aber auch Früchte und kleine Tiere</p>
-                </article>
-
-                <article class="fact-card">
-                    <div class="fact-icon">🌙</div>
-                    <h3>Lebensweise</h3>
-                    <p>Meist einzelgängerisch und vor allem in der Dämmerung aktiv</p>
-                </article>
+        <div class="creation-side">
+          <div class="result-card" id="resultCard">
+            <div class="result-label">DEINE NEUE ERFINDUNG</div>
+            <div class="result-emoji" id="resultEmoji">❔</div>
+            <h3 id="resultName">Noch nichts erfunden!</h3>
+            <p id="resultDescription">Wähle links deine Zutaten und starte den Candy Creator.</p>
+            <div class="result-tags" id="resultTags">
+              <span>WARTET AUF DICH</span>
             </div>
-        </section>
-
-        <section class="forest-section" id="leben">
-            <div class="forest-content">
-                <p class="section-label">03 / HOME SWEET HOME</p>
-                <h2>Ein Leben<br>hoch oben. 🌲</h2>
-                <p>
-                    Moose, Bäume und kühle Bergwälder sind sein Zuhause.
-                    Mit seinen scharfen Krallen kann der Rote Panda
-                    geschickt klettern. Dichte Wälder sind für ihn
-                    besonders wichtig.
-                </p>
-                <div class="chips">
-                    <span>🌿 Wälder</span>
-                    <span>🎋 Bambus</span>
-                    <span>🌧️ Kühles Klima</span>
-                </div>
-            </div>
-        </section>
-
-        <section class="section fun-section" id="funfacts">
-            <p class="section-label">04 / SECRET PANDA KNOWLEDGE</p>
-            <h2>Schon gewusst? <span>👀</span></h2>
-            <p class="fun-intro">
-                Wie viel Panda-Wissen steckt in dir?
-            </p>
-
-            <div class="fact-machine">
-                <div class="big-paw">🐾</div>
-                <p id="fact-text" aria-live="polite">
-                    Drücke den Button und entdecke einen geheimen Panda-Fakt!
-                </p>
-                <button id="fact-button" class="main-button" type="button">
-                    Neuen Fun Fact entdecken ✨
-                </button>
-            </div>
-        </section>
-
-        <section class="save-section">
+          </div>
+          <div class="random-card">
+            <div class="random-icon">🎲</div>
             <div>
-                <p class="section-label">05 / PROTECT THE WILD</p>
-                <h2>Unser Wald.<br>Unsere Verantwortung.</h2>
-                <p>
-                    Rote Pandas sind gefährdet. Lebensraumverlust,
-                    Waldzerstörung und andere menschliche Einflüsse
-                    bedrohen ihr Überleben.
-                </p>
+              <h3>Überraschungsmaschine</h3>
+              <p>Keine Ahnung, was du willst? Lass die Maschine entscheiden!</p>
+              <button class="small-button" id="randomCandy">ZUFALLS-CANDY ERSTELLEN ↗</button>
             </div>
-            <div class="save-symbol">🌏<br>🌱</div>
-        </section>
-    </main>
+          </div>
+        </div>
+      </div>
+      <div class="collection-bar">
+        <span>DEINE ERFINDUNGEN</span>
+        <span id="collectionText">Noch keine Candys in deiner Sammlung.</span>
+      </div>
+      <div class="collection" id="collection"></div>
+    </section>
 
-    <footer>
-        <p>🐾 RED PANDA JUNGLE</p>
-        <p>Mit Liebe für die flauschigen Waldakrobaten gemacht 🌿</p>
-        <a href="#home">Zurück nach oben ↑</a>
-    </footer>
+    <section class="order-section" id="orders">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">02 / DIE FABRIK BRAUCHT DICH</div>
+          <h2>ZEIT FÜR EINEN<br><span>AUFTRAG!</span></h2>
+        </div>
+        <p>Die Fabrik hat eine Bestellung erhalten. Kannst du die richtige Süssigkeit herstellen?</p>
+      </div>
 
+      <div class="order-card">
+        <div class="order-illustration">📦<div>NEW<br>ORDER!</div></div>
+        <div class="order-info">
+          <div class="eyebrow">KUNDENBESTELLUNG #<span id="orderNumber">001</span></div>
+          <h3 id="orderTitle">Die Sternenstaub-Bestellung</h3>
+          <p id="orderDescription">Eine Kundin wünscht sich ein ganz besonderes Candy.</p>
+          <div class="order-requirements" id="orderRequirements"></div>
+          <div class="order-actions">
+            <button class="main-button" id="completeOrder">AUFTRAG ERFÜLLEN ✓</button>
+            <button class="text-button" id="newOrder">Anderen Auftrag laden ↻</button>
+          </div>
+          <p class="order-feedback" id="orderFeedback">Stelle zuerst im Labor eine passende Süssigkeit her!</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="games-section" id="games">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">03 / PAUSENRAUM</div>
+          <h2>PLAY TIME<span>!</span></h2>
+        </div>
+        <p>Auch die besten Erfinder brauchen mal eine Pause. Willkommen im Spielebereich!</p>
+      </div>
+
+      <div class="games-grid">
+        <article class="game-card reaction-game">
+          <div class="game-number">GAME 01</div>
+          <div class="game-emoji">⚡</div>
+          <h3>REAKTIONS-TEST</h3>
+          <p>Warte, bis das Feld grün wird. Dann musst du blitzschnell klicken!</p>
+          <div class="reaction-box" id="reactionBox">KLICK AUF START!</div>
+          <button class="game-button" id="reactionStart">STARTEN</button>
+          <p class="game-feedback" id="reactionFeedback">Wie schnell bist du?</p>
+        </article>
+
+        <article class="game-card guess-game">
+          <div class="game-number">GAME 02</div>
+          <div class="game-emoji">🔢</div>
+          <h3>ZAHLEN-MYSTERY</h3>
+          <p>Ich denke an eine Zahl zwischen 1 und 20. Errätst du sie?</p>
+          <div class="guess-controls">
+            <input type="number" id="guessInput" min="1" max="20" placeholder="Dein Tipp">
+            <button class="game-button" id="guessButton">RATEN</button>
+          </div>
+          <p class="game-feedback" id="guessFeedback">Du hast 5 Versuche.</p>
+          <button class="reset-button" id="guessReset">NEU STARTEN ↻</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="recipe-section" id="recipes">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">04 / GEHEIME FABRIK-ARCHIVE</div>
+          <h2>DAS REZEPT<span>BUCH.</span></h2>
+        </div>
+        <p>Manche Rezepte sind so geheim, dass sie erst nach deinen Experimenten auftauchen.</p>
+      </div>
+      <div class="recipe-progress">
+        <div><span>FREIGESCHALTETE REZEPTE</span><strong id="recipeProgress">0 / 5</strong></div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      </div>
+      <div class="recipes-grid" id="recipesGrid"></div>
+      <p class="recipe-hint" id="recipeHint">💡 Tipp: Erfinde mehr Süssigkeiten, um geheime Rezepte zu entdecken.</p>
+    </section>
+
+    <section class="final-banner">
+      <div class="final-sparkle">✦ ✧ ✦</div>
+      <p>DU HAST DIE REGELN GEBROCHEN.</p>
+      <h2>GOOD CANDY.<br><span>BAD IDEAS.</span></h2>
+      <a href="#lab" class="main-button">ZURÜCK INS LABOR ↑</a>
+    </section>
+  </main>
+
+  <footer>
+    <span>🍬 THE UNREAL FACTORY</span>
+    <span>ERFUNDEN MIT EINER PRISE FANTASIE ✨</span>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+  <script src="script.js"></script>
 </body>
 </html>

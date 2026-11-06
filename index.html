@@ -3,224 +3,144 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Unreal Factory 🍬</title>
+  <title>Build Your City</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <header class="topbar">
-    <a class="logo" href="#home">🍭 UNREAL<span>FACTORY</span></a>
-    <nav>
-      <a href="#lab">Süssigkeiten-Labor</a>
-      <a href="#orders">Aufträge</a>
-      <a href="#games">Minispiele</a>
-      <a href="#recipes">Rezeptbuch</a>
-    </nav>
-    <div class="counter">🍬 <span id="candyCount">0</span></div>
-  </header>
+<header class="topbar">
+  <a href="#home" class="brand">CITY<span>BUILDER</span><small>YOUR WORLD. YOUR RULES.</small></a>
+  <nav>
+    <a href="#home">Stadt</a>
+    <a href="#build">Bauen</a>
+    <a href="#stats">Statistik</a>
+  </nav>
+  <div class="top-money">💰 <span id="money">1200</span> Coins</div>
+</header>
 
-  <main>
-    <section class="hero" id="home">
-      <div class="hero-copy">
-        <div class="eyebrow">DIE VERRÜCKTESTE FABRIK DER WELT</div>
-        <h1>MAKE IT<br><span>UNREAL.</span></h1>
-        <p>Hier gelten keine normalen Süssigkeiten-Regeln. Erfinde verrückte Sorten, mische geheime Zutaten und werde zur legendärsten Süssigkeiten-Erfinderin!</p>
-        <a class="main-button" href="#lab">FABRIK BETRETEN <span>→</span></a>
-        <div class="hero-stats">
-          <div><strong id="heroMade">0</strong><small>ERFUNDEN</small></div>
-          <div><strong id="heroRecipes">0</strong><small>REZEPTE</small></div>
-          <div><strong>∞</strong><small>MÖGLICHKEITEN</small></div>
-        </div>
+<main id="home">
+  <section class="welcome">
+    <div>
+      <div class="eyebrow">DEIN NEUES PROJEKT · 001</div>
+      <h1>Eine Stadt.<br><span>Unendlich viele Ideen.</span></h1>
+      <p>Baue deinen eigenen Ort. Entscheide, wo Menschen wohnen, einkaufen, spielen und leben.</p>
+    </div>
+    <div class="welcome-icon">🏙️</div>
+  </section>
+
+  <section class="dashboard">
+    <div class="stat-card">
+      <span>👥</span>
+      <div><small>BEWOHNER</small><strong id="population">0</strong></div>
+    </div>
+    <div class="stat-card">
+      <span>🏢</span>
+      <div><small>GEBÄUDE</small><strong id="buildingCount">0</strong></div>
+    </div>
+    <div class="stat-card">
+      <span>🌳</span>
+      <div><small>NATURPUNKTE</small><strong id="nature">0</strong></div>
+    </div>
+    <div class="stat-card">
+      <span>⭐</span>
+      <div><small>STADTLEVEL</small><strong id="level">1</strong></div>
+    </div>
+  </section>
+
+  <section class="city-section">
+    <div class="section-top">
+      <div>
+        <div class="eyebrow">DEIN STADTPLAN</div>
+        <h2 id="cityName">NEUSTADT</h2>
       </div>
-      <div class="hero-art">
-        <div class="orbit orbit-one"></div>
-        <div class="orbit orbit-two"></div>
-        <div class="hero-candy">🍬</div>
-        <div class="floaty float-a">🍭</div>
-        <div class="floaty float-b">🍓</div>
-        <div class="floaty float-c">✨</div>
-        <div class="floaty float-d">🍋</div>
-        <div class="hero-sticker">100%<br>UNREAL!</div>
+      <button class="rename-button" id="renameCity">✎ Stadt umbenennen</button>
+    </div>
+
+    <div class="city-frame">
+      <div class="map-toolbar">
+        <span>📍 DEINE STADT · BAUMODUS</span>
+        <span id="selectedLabel">Wähle ein Gebäude aus</span>
       </div>
-      <div class="hero-bottom">SCROLLEN, EXPERIMENTIEREN, NASCHEN (NUR VIRTUELL!) ↓</div>
-    </section>
-
-    <section class="section lab-section" id="lab">
-      <div class="section-heading">
-        <div>
-          <div class="eyebrow">01 / DAS EXPERIMENTIER-LABOR</div>
-          <h2>ERFINDE DEIN<br><span>EIGENES CANDY.</span></h2>
-        </div>
-        <p>Du bist die Chefin des Labors. Kombiniere Zutaten und erschaffe etwas, das es noch nie gegeben hat.</p>
+      <div class="city-map" id="cityMap">
+        <div class="map-road road-horizontal"></div>
+        <div class="map-road road-vertical"></div>
+        <div class="map-road road-diagonal"></div>
+        <div class="map-label label-north">NORDVIERTEL</div>
+        <div class="map-label label-south">SÜDVIERTEL</div>
+        <div class="map-label label-east">OSTPARK</div>
+        <div class="map-label label-west">WESTSTADT</div>
+        <div class="map-hint" id="mapHint">Wähle unten ein Gebäude und klicke auf eine freie Fläche!</div>
       </div>
-
-      <div class="lab-layout">
-        <div class="machine">
-          <div class="machine-top">
-            <span>✳ CANDY CREATOR 3000</span>
-            <span class="live-dot">● ONLINE</span>
-          </div>
-          <div class="machine-window">
-            <div class="machine-light"></div>
-            <div class="machine-candy" id="machineCandy">🍬</div>
-            <div class="machine-caption" id="machineCaption">BEREIT FÜR DEINE IDEE</div>
-          </div>
-          <div class="machine-controls">
-            <div class="control-row">
-              <label for="flavour">GESCHMACK</label>
-              <select id="flavour">
-                <option value="Erdbeer">🍓 Erdbeer</option>
-                <option value="Zitrone">🍋 Zitrone</option>
-                <option value="Waldbeere">🫐 Waldbeere</option>
-                <option value="Melone">🍉 Melone</option>
-                <option value="Sternenstaub">🌟 Sternenstaub</option>
-                <option value="Cola-Wolke">🥤 Cola-Wolke</option>
-              </select>
-            </div>
-            <div class="control-row">
-              <label for="shape">FORM</label>
-              <select id="shape">
-                <option value="Stern">⭐ Stern</option>
-                <option value="Herz">💖 Herz</option>
-                <option value="Kugel">🔮 Kugel</option>
-                <option value="Regenbogen">🌈 Regenbogen</option>
-                <option value="Alien">👽 Alien</option>
-                <option value="Dino">🦖 Dino</option>
-              </select>
-            </div>
-            <div class="control-row">
-              <label for="topping">EXTRA</label>
-              <select id="topping">
-                <option value="Glitzer">✨ Glitzer</option>
-                <option value="Sternchen">⭐ Sternchen</option>
-                <option value="Knister-Konfetti">🎉 Knister-Konfetti</option>
-                <option value="Zauberstaub">🪄 Zauberstaub</option>
-                <option value="Mini-Marshmallows">☁️ Mini-Marshmallows</option>
-              </select>
-            </div>
-            <button class="create-button" id="createCandy">✨ SÜSSIGKEIT ERFINDEN</button>
-          </div>
-        </div>
-
-        <div class="creation-side">
-          <div class="result-card" id="resultCard">
-            <div class="result-label">DEINE NEUE ERFINDUNG</div>
-            <div class="result-emoji" id="resultEmoji">❔</div>
-            <h3 id="resultName">Noch nichts erfunden!</h3>
-            <p id="resultDescription">Wähle links deine Zutaten und starte den Candy Creator.</p>
-            <div class="result-tags" id="resultTags">
-              <span>WARTET AUF DICH</span>
-            </div>
-          </div>
-          <div class="random-card">
-            <div class="random-icon">🎲</div>
-            <div>
-              <h3>Überraschungsmaschine</h3>
-              <p>Keine Ahnung, was du willst? Lass die Maschine entscheiden!</p>
-              <button class="small-button" id="randomCandy">ZUFALLS-CANDY ERSTELLEN ↗</button>
-            </div>
-          </div>
-        </div>
+      <div class="map-footer">
+        <span>🟢 GRÜNFLÄCHE</span>
+        <span>⬜ STRASSE</span>
+        <span>🏗️ DEIN BAUPROJEKT</span>
       </div>
-      <div class="collection-bar">
-        <span>DEINE ERFINDUNGEN</span>
-        <span id="collectionText">Noch keine Candys in deiner Sammlung.</span>
+    </div>
+  </section>
+
+  <section class="build-section" id="build">
+    <div class="section-top">
+      <div>
+        <div class="eyebrow">BAUPLATZ · 01</div>
+        <h2>WAS BAUEN WIR?</h2>
       </div>
-      <div class="collection" id="collection"></div>
-    </section>
+      <p>Wähle ein Gebäude und platziere es auf deiner Karte.</p>
+    </div>
 
-    <section class="order-section" id="orders">
-      <div class="section-heading">
-        <div>
-          <div class="eyebrow">02 / DIE FABRIK BRAUCHT DICH</div>
-          <h2>ZEIT FÜR EINEN<br><span>AUFTRAG!</span></h2>
-        </div>
-        <p>Die Fabrik hat eine Bestellung erhalten. Kannst du die richtige Süssigkeit herstellen?</p>
+    <div class="building-grid" id="buildingGrid"></div>
+
+    <div class="build-actions">
+      <button id="cancelBuild" class="secondary-button">Auswahl aufheben</button>
+      <button id="clearCity" class="danger-button">Stadt zurücksetzen</button>
+    </div>
+  </section>
+
+  <section class="stats-section" id="stats">
+    <div class="section-top">
+      <div>
+        <div class="eyebrow">DEIN FORTSCHRITT</div>
+        <h2>WIE LÄUFT'S?</h2>
       </div>
+    </div>
 
-      <div class="order-card">
-        <div class="order-illustration">📦<div>NEW<br>ORDER!</div></div>
-        <div class="order-info">
-          <div class="eyebrow">KUNDENBESTELLUNG #<span id="orderNumber">001</span></div>
-          <h3 id="orderTitle">Die Sternenstaub-Bestellung</h3>
-          <p id="orderDescription">Eine Kundin wünscht sich ein ganz besonderes Candy.</p>
-          <div class="order-requirements" id="orderRequirements"></div>
-          <div class="order-actions">
-            <button class="main-button" id="completeOrder">AUFTRAG ERFÜLLEN ✓</button>
-            <button class="text-button" id="newOrder">Anderen Auftrag laden ↻</button>
-          </div>
-          <p class="order-feedback" id="orderFeedback">Stelle zuerst im Labor eine passende Süssigkeit her!</p>
-        </div>
+    <div class="progress-panel">
+      <div class="progress-title">
+        <strong>🏆 Stadtentwicklung</strong>
+        <span id="progressText">0 / 5 Gebäude</span>
       </div>
-    </section>
+      <div class="progress-track"><div id="progressBar"></div></div>
+      <p id="progressMessage">Baue fünf Gebäude, um dein nächstes Stadtlevel zu erreichen!</p>
+    </div>
 
-    <section class="games-section" id="games">
-      <div class="section-heading">
-        <div>
-          <div class="eyebrow">03 / PAUSENRAUM</div>
-          <h2>PLAY TIME<span>!</span></h2>
-        </div>
-        <p>Auch die besten Erfinder brauchen mal eine Pause. Willkommen im Spielebereich!</p>
+    <div class="mission-panel">
+      <div class="mission-icon">🎯</div>
+      <div>
+        <div class="eyebrow">DEINE AKTUELLE MISSION</div>
+        <h3 id="missionTitle">Die erste Nachbarschaft</h3>
+        <p id="missionText">Baue drei beliebige Gebäude in deiner Stadt.</p>
+        <span id="missionReward">Belohnung: 150 Coins</span>
       </div>
+      <button id="claimMission">MISSION PRÜFEN</button>
+    </div>
+  </section>
 
-      <div class="games-grid">
-        <article class="game-card reaction-game">
-          <div class="game-number">GAME 01</div>
-          <div class="game-emoji">⚡</div>
-          <h3>REAKTIONS-TEST</h3>
-          <p>Warte, bis das Feld grün wird. Dann musst du blitzschnell klicken!</p>
-          <div class="reaction-box" id="reactionBox">KLICK AUF START!</div>
-          <button class="game-button" id="reactionStart">STARTEN</button>
-          <p class="game-feedback" id="reactionFeedback">Wie schnell bist du?</p>
-        </article>
+  <section class="final-section">
+    <div class="eyebrow">DEINE STADT, DEINE GESCHICHTE</div>
+    <h2>BIG IDEAS.<br>SMALL BEGINNINGS.</h2>
+    <p>Jede grosse Stadt beginnt mit einem einzigen Gebäude.</p>
+    <button id="celebrate">🎉 Meine Stadt feiern</button>
+  </section>
+</main>
 
-        <article class="game-card guess-game">
-          <div class="game-number">GAME 02</div>
-          <div class="game-emoji">🔢</div>
-          <h3>ZAHLEN-MYSTERY</h3>
-          <p>Ich denke an eine Zahl zwischen 1 und 20. Errätst du sie?</p>
-          <div class="guess-controls">
-            <input type="number" id="guessInput" min="1" max="20" placeholder="Dein Tipp">
-            <button class="game-button" id="guessButton">RATEN</button>
-          </div>
-          <p class="game-feedback" id="guessFeedback">Du hast 5 Versuche.</p>
-          <button class="reset-button" id="guessReset">NEU STARTEN ↻</button>
-        </article>
-      </div>
-    </section>
+<footer>
+  <span>🏙️ BUILD YOUR CITY</span>
+  <span>DESIGNED BY YOU · BUILT WITH IDEAS</span>
+</footer>
 
-    <section class="recipe-section" id="recipes">
-      <div class="section-heading">
-        <div>
-          <div class="eyebrow">04 / GEHEIME FABRIK-ARCHIVE</div>
-          <h2>DAS REZEPT<span>BUCH.</span></h2>
-        </div>
-        <p>Manche Rezepte sind so geheim, dass sie erst nach deinen Experimenten auftauchen.</p>
-      </div>
-      <div class="recipe-progress">
-        <div><span>FREIGESCHALTETE REZEPTE</span><strong id="recipeProgress">0 / 5</strong></div>
-        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-      </div>
-      <div class="recipes-grid" id="recipesGrid"></div>
-      <p class="recipe-hint" id="recipeHint">💡 Tipp: Erfinde mehr Süssigkeiten, um geheime Rezepte zu entdecken.</p>
-    </section>
+<div class="toast" id="toast"></div>
 
-    <section class="final-banner">
-      <div class="final-sparkle">✦ ✧ ✦</div>
-      <p>DU HAST DIE REGELN GEBROCHEN.</p>
-      <h2>GOOD CANDY.<br><span>BAD IDEAS.</span></h2>
-      <a href="#lab" class="main-button">ZURÜCK INS LABOR ↑</a>
-    </section>
-  </main>
-
-  <footer>
-    <span>🍬 THE UNREAL FACTORY</span>
-    <span>ERFUNDEN MIT EINER PRISE FANTASIE ✨</span>
-  </footer>
-
-  <div class="toast" id="toast"></div>
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

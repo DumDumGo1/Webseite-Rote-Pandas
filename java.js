@@ -1,356 +1,326 @@
-// ==================================
-// BUILD YOUR CITY – GAME LOGIC
-// ==================================
 
-let money = 1200;
-let buildings = [];
-let selectedBuilding = null;
-let missionCompleted = false;
+function enterWorld() {
+    document.getElementById("main-content").scrollIntoView({ behavior: "smooth" });
+}
 
-const buildingTypes = [
-  { id: "house", name: "Wohnhaus", emoji: "🏠", price: 100, people: 8, nature: 0 },
-  { id: "tower", name: "Wolkenkratzer", emoji: "🏙️", price: 250, people: 30, nature: 0 },
-  { id: "shop", name: "Geschäft", emoji: "🏪", price: 150, people: 0, nature: 0 },
-  { id: "school", name: "Schule", emoji: "🏫", price: 200, people: 0, nature: 0 },
-  { id: "park", name: "Park", emoji: "🌳", price: 120, people: 0, nature: 10 },
-  { id: "fountain", name: "Brunnen", emoji: "⛲", price: 180, people: 0, nature: 5 },
-  { id: "cafe", name: "Café", emoji: "☕", price: 130, people: 0, nature: 0 },
-  { id: "hospital", name: "Spital", emoji: "🏥", price: 300, people: 0, nature: 0 },
-  { id: "stadium", name: "Stadion", emoji: "🏟️", price: 350, people: 0, nature: 0 },
-  { id: "flower", name: "Blumenwiese", emoji: "🌷", price: 80, people: 0, nature: 15 },
-  { id: "pool", name: "Schwimmbad", emoji: "🏊", price: 280, people: 0, nature: 0 },
-  { id: "museum", name: "Museum", emoji: "🏛️", price: 320, people: 0, nature: 0 }
+// ORTE AUF DER KARTE
+
+const places = {
+    auenland: {
+        icon: "🌿",
+        title: "Das Auenland",
+        text: "Die grüne Heimat der Hobbits. Hier beginnt Frodos grosse Reise."
+    },
+    bruchtal: {
+        icon: "🏛️",
+        title: "Bruchtal",
+        text: "Ein verborgenes Tal der Elben. Hier wird die Gemeinschaft des Ringes gegründet."
+    },
+    moria: {
+        icon: "⛰️",
+        title: "Moria",
+        text: "Ein gewaltiges unterirdisches Zwergenreich. Einst voller Leben, später ein gefährlicher Ort."
+    },
+    rohan: {
+        icon: "🐎",
+        title: "Rohan",
+        text: "Das Land der Pferdeherren. Seine Bewohner sind für ihre Reitkunst bekannt."
+    },
+    gondor: {
+        icon: "🏰",
+        title: "Gondor",
+        text: "Ein mächtiges Königreich der Menschen. Minas Tirith ist seine berühmte Hauptstadt."
+    },
+    mordor: {
+        icon: "🌋",
+        title: "Mordor",
+        text: "Das dunkle Land Saurons. Im Schicksalsberg kann der Eine Ring zerstört werden."
+    }
+};
+
+function showPlace(place) {
+    const data = places[place];
+    document.getElementById("place-info").innerHTML = `
+        <span class="place-icon">${data.icon}</span>
+        <h3>${data.title}</h3>
+        <p>${data.text}</p>
+    `;
+}
+
+// RING-MODUS
+
+function toggleRingMode() {
+    document.body.classList.toggle("ring-mode");
+
+    if (document.body.classList.contains("ring-mode")) {
+        showPopup("⚫", "Der Ring erwacht", "Die Farben verändern sich. Die Schatten werden länger. Du hast den Ring-Modus aktiviert.");
+    } else {
+        showPopup("🌿", "Das Licht kehrt zurück", "Mittelerde ist wieder in seinem ursprünglichen Licht.");
+    }
+}
+
+function ringSecret() {
+    showPopup("✨", "Ein verborgenes Zeichen", "Du hast den Ring direkt berührt. Nicht jeder entdeckt dieses kleine Geheimnis!");
+}
+
+// PERSÖNLICHKEITSTEST
+
+const personalityQuestions = [
+    {
+        question: "1. Was wäre dein perfekter Tag?",
+        answers: [
+            ["🌻 Ein gemütlicher Tag im Grünen", "hobbit"],
+            ["🌲 Ein Spaziergang durch einen Zauberwald", "elf"],
+            ["💎 Etwas erschaffen und entdecken", "dwarf"],
+            ["⚔️ Ein spannendes Abenteuer erleben", "human"]
+        ]
+    },
+    {
+        question: "2. Was ist deine grösste Stärke?",
+        answers: [
+            ["❤️ Ich bin loyal und zuverlässig", "hobbit"],
+            ["✨ Ich bin kreativ und aufmerksam", "elf"],
+            ["💪 Ich gebe nicht so schnell auf", "dwarf"],
+            ["🦁 Ich bin mutig und entschlossen", "human"]
+        ]
+    },
+    {
+        question: "3. Wo würdest du am liebsten wohnen?",
+        answers: [
+            ["🏡 In einem gemütlichen Hügelhaus", "hobbit"],
+            ["🌳 In einem geheimnisvollen Wald", "elf"],
+            ["⛰️ In einer grossen Berghalle", "dwarf"],
+            ["🏰 In einer alten Königsstadt", "human"]
+        ]
+    }
 ];
 
-const $ = id => document.getElementById(id);
+let personalityStep = 0;
+let personalityScores = { hobbit: 0, elf: 0, dwarf: 0, human: 0 };
 
-function showToast(message) {
-  const toast = $("toast");
-  toast.textContent = message;
-  toast.classList.add("show");
+function renderPersonality() {
+    const q = personalityQuestions[personalityStep];
+    document.getElementById("question-title").textContent = q.question;
+    document.getElementById("test-progress").textContent =
+        `FRAGE ${personalityStep + 1} VON 3`;
 
-  clearTimeout(showToast.timer);
-  showToast.timer = setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2600);
+    const answers = document.getElementById("answers");
+    answers.innerHTML = "";
+
+    q.answers.forEach(([label, type]) => {
+        const button = document.createElement("button");
+        button.textContent = label;
+        button.onclick = () => answerPersonality(type);
+        answers.appendChild(button);
+    });
 }
 
-// ==================================
-// GEBÄUDEKARTEN ERSTELLEN
-// ==================================
+function answerPersonality(type) {
+    personalityScores[type]++;
+    personalityStep++;
 
-function renderBuildingOptions() {
-  const grid = $("buildingGrid");
-  grid.innerHTML = "";
+    if (personalityStep < personalityQuestions.length) {
+        renderPersonality();
+        return;
+    }
 
-  buildingTypes.forEach(type => {
-    const card = document.createElement("button");
-    card.className = "building-option";
-    card.dataset.id = type.id;
+    const winner = Object.keys(personalityScores).sort(
+        (a, b) => personalityScores[b] - personalityScores[a]
+    )[0];
 
-    card.innerHTML = `
-      <div class="building-emoji">${type.emoji}</div>
-      <strong>${type.name}</strong>
-      <small>${type.people > 0
-        ? `${type.people} mögliche Bewohner`
-        : type.nature > 0
-          ? `+${type.nature} Naturpunkte`
-          : "Ein neues Stadtgebäude"}
-      </small>
-      <span class="price">💰 ${type.price} Coins</span>
+    const results = {
+        hobbit: ["🧑‍🌾", "Du bist ein Hobbit!", "Du bist herzlich, loyal und weisst, wie wichtig Freundschaft und ein gemütliches Zuhause sind."],
+        elf: ["🧝", "Du bist ein Elb!", "Du bist kreativ, aufmerksam und liebst die Schönheit der Natur und geheimnisvolle Orte."],
+        dwarf: ["⛏️", "Du bist ein Zwerg!", "Du bist ausdauernd, praktisch und gibst nicht so schnell auf. Auf dich ist Verlass!"],
+        human: ["⚔️", "Du bist ein Mensch!", "Du bist mutig, entschlossen und bereit, neue Wege zu gehen."]
+    };
+
+    const result = results[winner];
+    document.getElementById("personality-test").innerHTML = `
+        <div style="font-size:55px">${result[0]}</div>
+        <h3>${result[1]}</h3>
+        <p>${result[2]}</p>
+        <button class="next-button" onclick="resetPersonality()">NOCHMAL TESTEN</button>
     `;
-
-    card.addEventListener("click", () => selectBuilding(type));
-
-    grid.appendChild(card);
-  });
 }
 
-function selectBuilding(type) {
-  if (money < type.price) {
-    showToast("❌ Du hast nicht genügend Coins!");
-    return;
-  }
-
-  selectedBuilding = type;
-
-  document.querySelectorAll(".building-option").forEach(card => {
-    card.classList.toggle("active", card.dataset.id === type.id);
-  });
-
-  $("selectedLabel").textContent =
-    `${type.emoji} ${type.name} ausgewählt`;
-
-  $("mapHint").textContent =
-    `Klicke auf eine freie Stelle, um ${type.name} zu bauen!`;
-
-  showToast(`${type.emoji} ${type.name} ausgewählt!`);
+function resetPersonality() {
+    personalityStep = 0;
+    personalityScores = { hobbit: 0, elf: 0, dwarf: 0, human: 0 };
+    document.getElementById("personality-test").innerHTML = `
+        <h3 id="question-title"></h3>
+        <div class="answers" id="answers"></div>
+        <p class="test-progress" id="test-progress"></p>
+    `;
+    renderPersonality();
 }
 
-// ==================================
-// GEBÄUDE AUF DER KARTE PLATZIEREN
-// ==================================
+// MITTELERDE-QUIZ
 
-$("cityMap").addEventListener("click", event => {
-  if (!selectedBuilding) return;
+const quizQuestions = [
+    {
+        question: "Wie heisst die Heimat der Hobbits?",
+        answers: ["Mordor", "Das Auenland", "Rohan"],
+        correct: 1,
+        explanation: "Richtig! Das Auenland ist die Heimat der Hobbits."
+    },
+    {
+        question: "Wer schmiedete den Einen Ring?",
+        answers: ["Gandalf", "Elrond", "Sauron"],
+        correct: 2,
+        explanation: "Genau! Sauron schmiedete den Einen Ring."
+    },
+    {
+        question: "Wie heisst die Stadt von Rohan?",
+        answers: ["Edoras", "Minas Tirith", "Bruchtal"],
+        correct: 0,
+        explanation: "Richtig! Edoras ist die Hauptstadt von Rohan."
+    },
+    {
+        question: "Welches Volk lebt in Moria?",
+        answers: ["Elben", "Zwerge", "Hobbits"],
+        correct: 1,
+        explanation: "Richtig! Moria war ein grosses Zwergenreich."
+    },
+    {
+        question: "Wo muss der Eine Ring zerstört werden?",
+        answers: ["Im Auenland", "In Bruchtal", "Im Schicksalsberg"],
+        correct: 2,
+        explanation: "Genau! Der Ring muss im Schicksalsberg in Mordor zerstört werden."
+    }
+];
 
-  if (event.target.closest(".building")) return;
+let quizIndex = 0;
+let quizPoints = 0;
+let quizAnswered = false;
 
-  const map = $("cityMap");
-  const rect = map.getBoundingClientRect();
+function renderQuiz() {
+    const q = quizQuestions[quizIndex];
+    document.getElementById("quiz-number").textContent =
+        `FRAGE 0${quizIndex + 1} / 05`;
+    document.getElementById("quiz-question").textContent = q.question;
+    document.getElementById("quiz-feedback").textContent = "";
+    document.getElementById("next-question").hidden = true;
+    document.getElementById("quiz-score").textContent = `Punkte: ${quizPoints}`;
+    quizAnswered = false;
 
-  const x = ((event.clientX - rect.left) / rect.width) * 100;
-  const y = ((event.clientY - rect.top) / rect.height) * 100;
+    const container = document.getElementById("quiz-answers");
+    container.innerHTML = "";
 
-  // Nicht direkt am Rand bauen
-  if (x < 6 || x > 94 || y < 6 || y > 94) {
-    showToast("Baue etwas weiter innerhalb der Karte!");
-    return;
-  }
+    q.answers.forEach((answer, index) => {
+        const button = document.createElement("button");
+        button.textContent = answer;
+        button.onclick = () => checkQuiz(index);
+        container.appendChild(button);
+    });
+}
 
-  if (money < selectedBuilding.price) {
-    showToast("❌ Nicht genügend Coins!");
-    return;
-  }
+function checkQuiz(answer) {
+    if (quizAnswered) return;
+    quizAnswered = true;
 
-  money -= selectedBuilding.price;
+    const q = quizQuestions[quizIndex];
+    const buttons = document.querySelectorAll("#quiz-answers button");
 
-  const building = {
-    ...selectedBuilding,
-    x,
-    y,
-    id: Date.now() + Math.random()
-  };
-
-  buildings.push(building);
-  drawBuildings();
-  updateStats();
-
-  showToast(`${building.emoji} ${building.name} wurde gebaut!`);
-});
-
-// ==================================
-// GEBÄUDE ZEICHNEN
-// ==================================
-
-function drawBuildings() {
-  document.querySelectorAll(".building").forEach(el => el.remove());
-
-  const map = $("cityMap");
-
-  buildings.forEach(building => {
-    const element = document.createElement("button");
-
-    element.className = "building";
-    element.textContent = building.emoji;
-    element.style.left = building.x + "%";
-    element.style.top = building.y + "%";
-    element.title = `${building.name} – Anklicken zum Abreissen`;
-
-    element.addEventListener("click", event => {
-      event.stopPropagation();
-
-      const answer = confirm(
-        `${building.name} abreissen?\nDu erhältst die Hälfte des Kaufpreises zurück.`
-      );
-
-      if (!answer) return;
-
-      buildings = buildings.filter(item => item.id !== building.id);
-
-      money += Math.floor(building.price / 2);
-
-      drawBuildings();
-      updateStats();
-
-      showToast("🏗️ Gebäude abgerissen. Coins zurückerhalten!");
+    buttons.forEach((button, index) => {
+        button.disabled = true;
+        if (index === q.correct) {
+            button.style.borderColor = "#d8b56d";
+            button.style.background = "#3d5036";
+        }
     });
 
-    map.appendChild(element);
-  });
+    if (answer === q.correct) {
+        quizPoints++;
+        document.getElementById("quiz-feedback").textContent = "✦ " + q.explanation;
+    } else {
+        document.getElementById("quiz-feedback").textContent =
+            "Noch nicht ganz! " + q.explanation;
+    }
 
-  $("mapHint").style.display =
-    buildings.length === 0 ? "block" : "none";
+    document.getElementById("quiz-score").textContent = `Punkte: ${quizPoints}`;
+    document.getElementById("next-question").hidden = false;
 }
 
-// ==================================
-// STADTSTATISTIK
-// ==================================
+function nextQuestion() {
+    quizIndex++;
 
-function updateStats() {
-  const population = buildings.reduce(
-    (sum, building) => sum + building.people, 0
-  );
+    if (quizIndex >= quizQuestions.length) {
+        document.getElementById("quiz-card");
+        document.querySelector(".quiz-card").innerHTML = `
+            <div style="font-size:45px">🏆</div>
+            <h3>Deine Reise ist geschafft!</h3>
+            <p>Du hast ${quizPoints} von 5 Punkten erreicht.</p>
+            <p>${quizPoints === 5 ? "Unglaublich! Du kennst Mittelerde bestens." : "Gut gemacht! Vielleicht entdeckst du beim nächsten Mal noch mehr."}</p>
+            <button class="next-button" onclick="restartQuiz()">NOCHMAL SPIELEN</button>
+        `;
+        return;
+    }
 
-  const nature = buildings.reduce(
-    (sum, building) => sum + building.nature, 0
-  );
-
-  const count = buildings.length;
-  const level = Math.floor(count / 5) + 1;
-
-  $("money").textContent = money.toLocaleString("de-CH");
-  $("population").textContent = population;
-  $("buildingCount").textContent = count;
-  $("nature").textContent = nature;
-  $("level").textContent = level;
-
-  const progress = count % 5;
-  const progressPercent = (progress / 5) * 100;
-
-  $("progressBar").style.width = progressPercent + "%";
-  $("progressText").textContent =
-    `${progress} / 5 Gebäude bis zum nächsten Level`;
-
-  if (count >= 5) {
-    $("progressMessage").textContent =
-      "🎉 Deine Stadt wächst! Baue weitere fünf Gebäude für das nächste Level.";
-  } else {
-    $("progressMessage").textContent =
-      `Noch ${5 - count} Gebäude bis zum nächsten Stadtlevel!`;
-  }
+    renderQuiz();
 }
 
-// ==================================
-// AUSWAHL AUFHEBEN
-// ==================================
+function restartQuiz() {
+    quizIndex = 0;
+    quizPoints = 0;
+    document.querySelector(".quiz-card").innerHTML = `
+        <div class="quiz-number" id="quiz-number"></div>
+        <h3 id="quiz-question"></h3>
+        <div id="quiz-answers" class="answers"></div>
+        <p id="quiz-feedback"></p>
+        <button class="next-button" id="next-question" onclick="nextQuestion()" hidden>WEITER ➜</button>
+        <p class="quiz-score" id="quiz-score"></p>
+    `;
+    renderQuiz();
+}
 
-$("cancelBuild").addEventListener("click", () => {
-  selectedBuilding = null;
+// GEHEIME TÜR
 
-  document.querySelectorAll(".building-option").forEach(card => {
-    card.classList.remove("active");
-  });
+function openDoor() {
+    const word = document.getElementById("secret-word").value.trim().toLowerCase();
+    const feedback = document.getElementById("door-feedback");
 
-  $("selectedLabel").textContent = "Wähle ein Gebäude aus";
-  $("mapHint").textContent =
-    "Wähle unten ein Gebäude und klicke auf eine freie Fläche!";
+    if (word === "mellon") {
+        feedback.textContent = "✦ Die Tür öffnet sich! Willkommen in der geheimen Halle!";
+        showPopup("🚪", "Die Tür ist offen!", "Du hast das richtige Wort gefunden: Mellon. Es bedeutet auf Sindarin 'Freund'.");
+    } else {
+        feedback.textContent = "Die Tür bleibt verschlossen. Versuche es noch einmal ...";
+    }
+}
 
-  showToast("Auswahl aufgehoben.");
+// POPUP
+
+function showPopup(symbol, title, text) {
+    document.getElementById("popup-symbol").textContent = symbol;
+    document.getElementById("popup-title").textContent = title;
+    document.getElementById("popup-text").textContent = text;
+    document.getElementById("popup").classList.add("show");
+}
+
+function closePopup() {
+    document.getElementById("popup").classList.remove("show");
+}
+
+document.getElementById("popup").addEventListener("click", function(event) {
+    if (event.target === this) closePopup();
 });
 
-// ==================================
-// STADT ZURÜCKSETZEN
-// ==================================
+// GEHEIMNISSE
 
-$("clearCity").addEventListener("click", () => {
-  const answer = confirm(
-    "Möchtest du wirklich alle Gebäude abreissen und neu beginnen?"
-  );
+function footerSecret() {
+    showPopup("🧙", "Der Wanderer", "Ein alter Wanderer war hier. Er hat eine Nachricht hinterlassen: Halte immer Ausschau nach dem Unerwarteten.");
+}
 
-  if (!answer) return;
-
-  buildings = [];
-  money = 1200;
-  selectedBuilding = null;
-  missionCompleted = false;
-
-  document.querySelectorAll(".building-option").forEach(card => {
-    card.classList.remove("active");
-  });
-
-  $("selectedLabel").textContent = "Wähle ein Gebäude aus";
-
-  $("claimMission").textContent = "MISSION PRÜFEN";
-  $("claimMission").disabled = false;
-
-  drawBuildings();
-  updateStats();
-
-  showToast("🔄 Deine Stadt wurde zurückgesetzt!");
+let secretClicks = 0;
+document.querySelector(".hero-symbol").addEventListener("click", () => {
+    secretClicks++;
+    if (secretClicks === 5) {
+        showPopup("⭐", "Fünf Sterne!", "Du hast das geheime Zeichen fünfmal berührt. Du bist eine aufmerksame Entdeckerin!");
+        secretClicks = 0;
+    }
 });
 
-// ==================================
-// STADT UMBENENNEN
-// ==================================
-
-$("renameCity").addEventListener("click", () => {
-  const newName = prompt(
-    "Wie soll deine Stadt heissen?",
-    $("cityName").textContent
-  );
-
-  if (newName && newName.trim()) {
-    $("cityName").textContent =
-      newName.trim().toUpperCase().slice(0, 22);
-
-    showToast(`🏙️ Willkommen in ${$("cityName").textContent}!`);
-  }
-});
-
-// ==================================
-// MISSION
-// ==================================
-
-$("claimMission").addEventListener("click", () => {
-  if (missionCompleted) {
-    showToast("Du hast diese Mission bereits geschafft!");
-    return;
-  }
-
-  if (buildings.length >= 3) {
-    missionCompleted = true;
-    money += 150;
-
-    $("claimMission").textContent = "✓ ERLEDIGT";
-    $("claimMission").disabled = true;
-
-    updateStats();
-
-    showToast("🏆 Mission geschafft! Du erhältst 150 Coins!");
-  } else {
-    const missing = 3 - buildings.length;
-
-    showToast(
-      `Dir fehlen noch ${missing} Gebäude für diese Mission!`
-    );
-  }
-});
-
-// ==================================
-// STADT FEIERN
-// ==================================
-
-$("celebrate").addEventListener("click", () => {
-  if (buildings.length === 0) {
-    showToast("Baue zuerst ein Gebäude. Dann wird gefeiert! 🎉");
-    return;
-  }
-
-  showToast(
-    `🎉 Hoch lebe ${$("cityName").textContent}! ${buildings.length} Gebäude und eine grossartige Zukunft!`
-  );
-
-  for (let i = 0; i < 12; i++) {
-    const sparkle = document.createElement("div");
-
-    sparkle.textContent = ["✨", "🎉", "⭐", "🎊"][
-      Math.floor(Math.random() * 4)
-    ];
-
-    sparkle.style.position = "fixed";
-    sparkle.style.left = Math.random() * 100 + "vw";
-    sparkle.style.top = "-30px";
-    sparkle.style.fontSize = "25px";
-    sparkle.style.pointerEvents = "none";
-    sparkle.style.zIndex = "40";
-    sparkle.style.transition = "transform 2s ease, opacity 2s ease";
-
-    document.body.appendChild(sparkle);
-
-    requestAnimationFrame(() => {
-      sparkle.style.transform =
-        `translateY(${window.innerHeight + 60}px) rotate(360deg)`;
-      sparkle.style.opacity = "0";
-    });
-
-    setTimeout(() => sparkle.remove(), 2200);
-  }
-});
-
-// ==================================
 // START
-// ==================================
 
-renderBuildingOptions();
-updateStats();
+renderPersonality();
+renderQuiz();

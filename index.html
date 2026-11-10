@@ -1,145 +1,261 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Build Your City</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Die Chroniken von Mittelerde</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<header class="topbar">
-  <a href="#home" class="brand">CITY<span>BUILDER</span><small>YOUR WORLD. YOUR RULES.</small></a>
-  <nav>
-    <a href="#home">Stadt</a>
-    <a href="#build">Bauen</a>
-    <a href="#stats">Statistik</a>
-  </nav>
-  <div class="top-money">💰 <span id="money">1200</span> Coins</div>
+<div class="stars" id="stars"></div>
+
+<header class="hero">
+    <div class="hero-top">✦ DAS ROTE BUCH DER WESTMARK ✦</div>
+    <div class="hero-symbol">⚜</div>
+    <p class="eyebrow">EINE REISE DURCH DIE GESCHICHTEN</p>
+    <h1>DIE CHRONIKEN<br><span>VON MITTELERDE</span></h1>
+    <p class="hero-subtitle">Von den grünen Hügeln des Auenlandes bis zu den Schatten Mordors</p>
+    <button class="gold-button" onclick="enterWorld()">DIE REISE BEGINNEN <span>➜</span></button>
+    <div class="hero-bottom">✧ Eine Welt voller Legenden, Völker und vergessener Geheimnisse ✧</div>
 </header>
 
-<main id="home">
-  <section class="welcome">
-    <div>
-      <div class="eyebrow">DEIN NEUES PROJEKT · 001</div>
-      <h1>Eine Stadt.<br><span>Unendlich viele Ideen.</span></h1>
-      <p>Baue deinen eigenen Ort. Entscheide, wo Menschen wohnen, einkaufen, spielen und leben.</p>
-    </div>
-    <div class="welcome-icon">🏙️</div>
-  </section>
+<nav class="main-nav">
+    <a href="#au enland" onclick="return false;"> </a>
+    <a href="#au enland">AUENLAND</a>
+    <a href="#voelker">VÖLKER</a>
+    <a href="#karte">KARTE</a>
+    <a href="#ring">DER RING</a>
+    <a href="#gemeinschaft">GEMEINSCHAFT</a>
+    <a href="#quiz">QUIZ</a>
+</nav>
 
-  <section class="dashboard">
-    <div class="stat-card">
-      <span>👥</span>
-      <div><small>BEWOHNER</small><strong id="population">0</strong></div>
-    </div>
-    <div class="stat-card">
-      <span>🏢</span>
-      <div><small>GEBÄUDE</small><strong id="buildingCount">0</strong></div>
-    </div>
-    <div class="stat-card">
-      <span>🌳</span>
-      <div><small>NATURPUNKTE</small><strong id="nature">0</strong></div>
-    </div>
-    <div class="stat-card">
-      <span>⭐</span>
-      <div><small>STADTLEVEL</small><strong id="level">1</strong></div>
-    </div>
-  </section>
+<main id="main-content">
 
-  <section class="city-section">
-    <div class="section-top">
-      <div>
-        <div class="eyebrow">DEIN STADTPLAN</div>
-        <h2 id="cityName">NEUSTADT</h2>
-      </div>
-      <button class="rename-button" id="renameCity">✎ Stadt umbenennen</button>
+<section class="intro section">
+    <div class="section-mark">I</div>
+    <p class="eyebrow">WILLKOMMEN IN EINER ANDEREN WELT</p>
+    <h2>Ein Land. Viele Geschichten.</h2>
+    <p class="intro-text">
+        Mittelerde ist eine fantastische Welt voller alter Königreiche, geheimnisvoller Wälder,
+        mächtiger Zauberer und mutiger Gefährten. Hier leben Hobbits, Elben, Zwerge und Menschen.
+        Doch eine uralte Macht bedroht das Gleichgewicht dieser Welt.
+    </p>
+    <div class="quote-card">
+        <span>✦</span>
+        <p>Manchmal beginnen die grössten Abenteuer an den unerwartetsten Orten.</p>
+        <small>— Eine eigene Chronik von Mittelerde</small>
     </div>
+</section>
 
-    <div class="city-frame">
-      <div class="map-toolbar">
-        <span>📍 DEINE STADT · BAUMODUS</span>
-        <span id="selectedLabel">Wähle ein Gebäude aus</span>
-      </div>
-      <div class="city-map" id="cityMap">
-        <div class="map-road road-horizontal"></div>
-        <div class="map-road road-vertical"></div>
-        <div class="map-road road-diagonal"></div>
-        <div class="map-label label-north">NORDVIERTEL</div>
-        <div class="map-label label-south">SÜDVIERTEL</div>
-        <div class="map-label label-east">OSTPARK</div>
-        <div class="map-label label-west">WESTSTADT</div>
-        <div class="map-hint" id="mapHint">Wähle unten ein Gebäude und klicke auf eine freie Fläche!</div>
-      </div>
-      <div class="map-footer">
-        <span>🟢 GRÜNFLÄCHE</span>
-        <span>⬜ STRASSE</span>
-        <span>🏗️ DEIN BAUPROJEKT</span>
-      </div>
+<section class="section shire" id="auenland">
+    <div class="section-mark">II</div>
+    <p class="eyebrow">EIN ORT ZUM ZUHAUSESEIN</p>
+    <h2>Das Auenland</h2>
+    <div class="shire-art">
+        <div class="shire-sun">☀</div>
+        <div class="shire-hill hill-one"></div>
+        <div class="shire-hill hill-two"></div>
+        <div class="shire-house">🏡</div>
+        <div class="shire-flower flower-one">✿</div>
+        <div class="shire-flower flower-two">✿</div>
+        <div class="shire-flower flower-three">✿</div>
     </div>
-  </section>
-
-  <section class="build-section" id="build">
-    <div class="section-top">
-      <div>
-        <div class="eyebrow">BAUPLATZ · 01</div>
-        <h2>WAS BAUEN WIR?</h2>
-      </div>
-      <p>Wähle ein Gebäude und platziere es auf deiner Karte.</p>
+    <p class="body-copy">
+        Das Auenland ist die Heimat der Hobbits. Es ist bekannt für seine grünen Hügel,
+        gemütlichen Höhlenwohnungen, Gärten und seine friedliche Lebensweise.
+        Hobbits lieben gutes Essen, Feste und ein ruhiges Leben.
+    </p>
+    <div class="fact-grid">
+        <article class="fact-card"><span>🍃</span><h3>Lebensweise</h3><p>Gemütlich, naturverbunden und gesellig.</p></article>
+        <article class="fact-card"><span>🍄</span><h3>Lieblingsessen</h3><p>Gutes Essen, besonders mehrere Mahlzeiten am Tag.</p></article>
+        <article class="fact-card"><span>🏡</span><h3>Wohnorte</h3><p>Gemütliche Höhlenhäuser, oft in grünen Hügeln.</p></article>
     </div>
+</section>
 
-    <div class="building-grid" id="buildingGrid"></div>
+<section class="section peoples" id="voelker">
+    <div class="section-mark">III</div>
+    <p class="eyebrow">DIE BEWOHNER MITTELERDES</p>
+    <h2>Die Völker</h2>
+    <p class="body-copy">Jedes Volk hat seine eigene Geschichte, Kultur und besondere Fähigkeiten.</p>
 
-    <div class="build-actions">
-      <button id="cancelBuild" class="secondary-button">Auswahl aufheben</button>
-      <button id="clearCity" class="danger-button">Stadt zurücksetzen</button>
+    <div class="people-grid">
+        <article class="people-card">
+            <div class="people-icon">🧝</div>
+            <h3>Elben</h3>
+            <p>Die Elben sind uralte, weise Wesen. Sie sind eng mit der Natur verbunden und für ihre Kunst, Musik und Geschicklichkeit bekannt.</p>
+            <span class="people-tag">WEISHEIT · NATUR · KUNST</span>
+        </article>
+        <article class="people-card">
+            <div class="people-icon">⛏️</div>
+            <h3>Zwerge</h3>
+            <p>Zwerge sind geschickte Handwerker und Bergleute. Sie erschaffen beeindruckende Hallen und sind für ihre Standhaftigkeit bekannt.</p>
+            <span class="people-tag">HANDWERK · BERGE · MUT</span>
+        </article>
+        <article class="people-card">
+            <div class="people-icon">🧙</div>
+            <h3>Zauberer</h3>
+            <p>Die Zauberer sind geheimnisvolle Wanderer. Sie unterstützen andere Völker mit Wissen, Rat und besonderen Kräften.</p>
+            <span class="people-tag">MAGIE · WISSEN · RAT</span>
+        </article>
+        <article class="people-card">
+            <div class="people-icon">🧑</div>
+            <h3>Menschen</h3>
+            <p>Die Menschen leben in unterschiedlichen Königreichen. Sie können mutig, ehrgeizig und manchmal auch sehr unterschiedlich sein.</p>
+            <span class="people-tag">KÖNIGREICHE · MUT · GESCHICHTE</span>
+        </article>
+        <article class="people-card">
+            <div class="people-icon">🧌</div>
+            <h3>Orks</h3>
+            <p>Orks sind gefährliche Diener dunkler Mächte. Sie treten häufig als Gegner der freien Völker auf.</p>
+            <span class="people-tag">MORDOR · SCHATTEN · GEFAHR</span>
+        </article>
+        <article class="people-card">
+            <div class="people-icon">🧑‍🌾</div>
+            <h3>Hobbits</h3>
+            <p>Hobbits sind klein, leben gerne friedlich und werden oft unterschätzt. Doch sie können erstaunlichen Mut beweisen.</p>
+            <span class="people-tag">FREUNDSCHAFT · MUT · HEIMAT</span>
+        </article>
     </div>
-  </section>
+</section>
 
-  <section class="stats-section" id="stats">
-    <div class="section-top">
-      <div>
-        <div class="eyebrow">DEIN FORTSCHRITT</div>
-        <h2>WIE LÄUFT'S?</h2>
-      </div>
+<section class="section map-section" id="karte">
+    <div class="section-mark">IV</div>
+    <p class="eyebrow">ERKUNDE DIE LÄNDER</p>
+    <h2>Die Karte von Mittelerde</h2>
+    <p class="body-copy">Wähle einen Ort auf der Karte und entdecke seine Geschichte.</p>
+
+    <div class="map">
+        <div class="map-title">✧ MITTELERDE ✧</div>
+        <button class="map-place shire-place" onclick="showPlace('auenland')">🌿<span>Auenland</span></button>
+        <button class="map-place rivendell-place" onclick="showPlace('bruchtal')">🏛️<span>Bruchtal</span></button>
+        <button class="map-place moria-place" onclick="showPlace('moria')">⛰️<span>Moria</span></button>
+        <button class="map-place rohan-place" onclick="showPlace('rohan')">🐎<span>Rohan</span></button>
+        <button class="map-place gondor-place" onclick="showPlace('gondor')">🏰<span>Gondor</span></button>
+        <button class="map-place mordor-place" onclick="showPlace('mordor')">🌋<span>Mordor</span></button>
+        <div class="map-mountain">♠ ♠ ♠</div>
+        <div class="map-river">〰 〰 〰</div>
     </div>
-
-    <div class="progress-panel">
-      <div class="progress-title">
-        <strong>🏆 Stadtentwicklung</strong>
-        <span id="progressText">0 / 5 Gebäude</span>
-      </div>
-      <div class="progress-track"><div id="progressBar"></div></div>
-      <p id="progressMessage">Baue fünf Gebäude, um dein nächstes Stadtlevel zu erreichen!</p>
+    <div class="place-info" id="place-info">
+        <span class="place-icon">🗺️</span>
+        <h3>Wähle einen Ort</h3>
+        <p>Die Karte wartet darauf, von dir erkundet zu werden.</p>
     </div>
+</section>
 
-    <div class="mission-panel">
-      <div class="mission-icon">🎯</div>
-      <div>
-        <div class="eyebrow">DEINE AKTUELLE MISSION</div>
-        <h3 id="missionTitle">Die erste Nachbarschaft</h3>
-        <p id="missionText">Baue drei beliebige Gebäude in deiner Stadt.</p>
-        <span id="missionReward">Belohnung: 150 Coins</span>
-      </div>
-      <button id="claimMission">MISSION PRÜFEN</button>
+<section class="section ring-section" id="ring">
+    <div class="section-mark">V</div>
+    <p class="eyebrow">EIN KLEINES OBJEKT. EINE GROSSE MACHT.</p>
+    <h2>Der Eine Ring</h2>
+    <div class="ring-art" onclick="ringSecret()">
+        <div class="ring-glow"></div>
+        <div class="ring-object">◯</div>
+        <span class="ring-spark">✧</span>
     </div>
-  </section>
+    <p class="body-copy">
+        Der Eine Ring wurde von Sauron geschmiedet, um die anderen Ringe der Macht zu beherrschen.
+        Er besitzt eine dunkle Macht und versucht, seine Träger zu beeinflussen.
+        Seine Zerstörung ist entscheidend für das Schicksal Mittelerdes.
+    </p>
+    <button class="gold-button" onclick="toggleRingMode()">⚫ RING-MODUS AKTIVIEREN</button>
+    <p class="small-note">Pssst ... klicke auch direkt auf den Ring.</p>
+</section>
 
-  <section class="final-section">
-    <div class="eyebrow">DEINE STADT, DEINE GESCHICHTE</div>
-    <h2>BIG IDEAS.<br>SMALL BEGINNINGS.</h2>
-    <p>Jede grosse Stadt beginnt mit einem einzigen Gebäude.</p>
-    <button id="celebrate">🎉 Meine Stadt feiern</button>
-  </section>
+<section class="section fellowship" id="gemeinschaft">
+    <div class="section-mark">VI</div>
+    <p class="eyebrow">NEUN GEFÄHRTEN. EIN GEMEINSAMES ZIEL.</p>
+    <h2>Die Gemeinschaft</h2>
+    <p class="body-copy">Die Gemeinschaft des Ringes wird in Bruchtal gegründet. Ihre Mitglieder kommen aus verschiedenen Völkern.</p>
+    <div class="fellowship-grid">
+        <div class="member"><span>🧝</span><b>Legolas</b><small>Elb</small></div>
+        <div class="member"><span>⛏️</span><b>Gimli</b><small>Zwerg</small></div>
+        <div class="member"><span>🧙</span><b>Gandalf</b><small>Zauberer</small></div>
+        <div class="member"><span>🧑</span><b>Aragorn</b><small>Mensch</small></div>
+        <div class="member"><span>🛡️</span><b>Boromir</b><small>Mensch</small></div>
+        <div class="member"><span>🧑‍🌾</span><b>Frodo</b><small>Hobbit</small></div>
+        <div class="member"><span>🌱</span><b>Sam</b><small>Hobbit</small></div>
+        <div class="member"><span>🍃</span><b>Merry</b><small>Hobbit</small></div>
+        <div class="member"><span>🍄</span><b>Pippin</b><small>Hobbit</small></div>
+    </div>
+</section>
+
+<section class="section personality" id="persoenlichkeit">
+    <div class="section-mark">VII</div>
+    <p class="eyebrow">FINDE DEINEN PLATZ IN MITTELERDE</p>
+    <h2>Welches Volk bist du?</h2>
+    <p class="body-copy">Beantworte drei kleine Fragen und entdecke, welchem Volk du am ehesten ähnelst.</p>
+
+    <div class="test-card" id="personality-test">
+        <h3 id="question-title">1. Was wäre dein perfekter Tag?</h3>
+        <div class="answers" id="answers">
+            <button onclick="answerPersonality('hobbit')">🌻 Ein gemütlicher Tag im Grünen</button>
+            <button onclick="answerPersonality('elf')">🌲 Ein Spaziergang durch einen Zauberwald</button>
+            <button onclick="answerPersonality('dwarf')">💎 Etwas erschaffen und entdecken</button>
+            <button onclick="answerPersonality('human')">⚔️ Ein spannendes Abenteuer erleben</button>
+        </div>
+        <p class="test-progress" id="test-progress">FRAGE 1 VON 3</p>
+    </div>
+</section>
+
+<section class="section quiz-section" id="quiz">
+    <div class="section-mark">VIII</div>
+    <p class="eyebrow">WIE GUT KENNST DU MITTELERDE?</p>
+    <h2>Das grosse Mittelerde-Quiz</h2>
+    <div class="quiz-card">
+        <div class="quiz-number" id="quiz-number">FRAGE 01 / 05</div>
+        <h3 id="quiz-question">Wie heisst die Heimat der Hobbits?</h3>
+        <div id="quiz-answers" class="answers">
+            <button onclick="checkQuiz(0)">Mordor</button>
+            <button onclick="checkQuiz(1)">Das Auenland</button>
+            <button onclick="checkQuiz(2)">Rohan</button>
+        </div>
+        <p id="quiz-feedback"></p>
+        <button class="next-button" id="next-question" onclick="nextQuestion()" hidden>WEITER ➜</button>
+        <p class="quiz-score" id="quiz-score">Punkte: 0</p>
+    </div>
+</section>
+
+<section class="section secret-section">
+    <div class="section-mark">IX</div>
+    <p class="eyebrow">NICHT JEDER FINDET DIESEN ORT</p>
+    <h2>Die geheime Tür</h2>
+    <p class="body-copy">Manche Türen öffnen sich nur mit dem richtigen Wort.</p>
+    <div class="secret-door">
+        <div class="door-symbol">ᚠ</div>
+        <p>Sprich das geheime Wort:</p>
+        <div class="door-input">
+            <input id="secret-word" type="text" placeholder="Geheimes Wort ...">
+            <button onclick="openDoor()">ÖFFNEN</button>
+        </div>
+        <p id="door-feedback">Die Tür ist verschlossen.</p>
+    </div>
+</section>
+
+<section class="section final-section">
+    <div class="final-star">✦</div>
+    <h2>Die Geschichte geht weiter ...</h2>
+    <p>Jede Reise hinterlässt Spuren. Und jede Legende beginnt irgendwo.</p>
+    <button class="gold-button" onclick="window.scrollTo({top:0, behavior:'smooth'})">ZURÜCK ZUM ANFANG ↑</button>
+</section>
+
 </main>
 
 <footer>
-  <span>🏙️ BUILD YOUR CITY</span>
-  <span>DESIGNED BY YOU · BUILT WITH IDEAS</span>
+    <p>✧ DIE CHRONIKEN VON MITTELERDE ✧</p>
+    <small>Eine Fanseite inspiriert von der Welt von J. R. R. Tolkien. Keine offizielle Website.</small>
+    <p class="footer-secret" onclick="footerSecret()">✦</p>
 </footer>
 
-<div class="toast" id="toast"></div>
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <button class="close-popup" onclick="closePopup()">✕</button>
+        <div id="popup-symbol">✨</div>
+        <h2 id="popup-title">Geheimnis entdeckt!</h2>
+        <p id="popup-text"></p>
+    </div>
+</div>
 
 <script src="script.js"></script>
 </body>
